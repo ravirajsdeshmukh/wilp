@@ -1,20 +1,27 @@
 import math
 
-globaldS = 8
+globaldS = 5
 
 class OpCount:
-    def __init__(self) -> None:
+    def __init__(self, disabled=False) -> None:
         self.A = 0
         self.M = 0
         self.D = 0
+        self.disabled = disabled
 
     def IncrA(self):
-         self.A = self.A + 1
+        if self.disabled:
+            return
+        self.A = self.A + 1
 
     def IncrM(self):
+        if self.disabled:        
+            return
         self.M = self.M + 1
 
     def IncrD(self):        
+        if self.disabled:        
+            return        
         self.D = self.D + 1
 
     def __str__(self) -> str:
@@ -51,6 +58,8 @@ def convertToDS(num, dS=globaldS):
     num is the number to convert to DS 
     d number of significant digits required
     '''
+    if dS == -1:
+        return num
     factor5 = 5 / math.pow(10, (dS+1))
     num2 = factor5 + num
     num2 = format(num2,  "." + str(dS-1) + 'f')

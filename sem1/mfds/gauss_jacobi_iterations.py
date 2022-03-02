@@ -2,7 +2,7 @@ from copy import deepcopy
 import imp
 from multiprocessing.spawn import import_main_path
 from tabulate import tabulate
-from utils import generate_vector_norms, generate_vector_substraction, str_matrix, str_vector
+from utils import generate_vector_norms, generate_vector_substraction, str_matrix, str_vector, convertToDS
 import random
 from digonally_dominant import is_diagonally_dominant, make_diagonally_dominant
 from gauss_jacobi_method import generate_one_iteration
@@ -27,6 +27,7 @@ if __name__ == "__main__":
     dim = 4
     results = list()
     D = list()
+    N = list()
     for idx in range(0, iterations):
         result = list()
         results.append(result)
@@ -41,7 +42,6 @@ if __name__ == "__main__":
                 else:                        
                     A[row_idx][col_idx] = random.randint(-6, 6)
             b[row_idx] = random.randint(-2, 2)
-
 
         # A = [
         #     [6, -2, 1],
@@ -74,6 +74,7 @@ if __name__ == "__main__":
         result.append(approximation) 
 
         E = list()
+        L = list()
         for idx in range(0, 10):
             X1 = generate_one_iteration(A, deepcopy(X), b)
             sol = str_vector(X1)
@@ -82,9 +83,10 @@ if __name__ == "__main__":
             E.append(str_vector(V))
             X = X1
             l1, l2, l_infinity = generate_vector_norms(V)
-            print("l2_norm:", l2)
+            L.append(convertToDS(l2, 5))
 
         D.append(E)
+        N.append(L)
 
 
     headers=["A", "b", "Iteration_0"]
@@ -96,10 +98,8 @@ if __name__ == "__main__":
 
     # Print original matrix A, constants vector V and value of X for each iteration
     print(tabulate(results, headers=headers, tablefmt="grid"))
-
  
-
     print(tabulate(D, headers=iterations, tablefmt="grid"))
 
-
+    print(tabulate(N, headers=iterations, tablefmt="grid"))
        

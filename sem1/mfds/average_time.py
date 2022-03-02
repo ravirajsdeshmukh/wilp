@@ -1,6 +1,6 @@
 from audioop import mul
 import math
-from datetime import datetime
+import time
 from tabulate import tabulate
 
 start = 1
@@ -10,37 +10,37 @@ def compute_addition_time():
     result = 0
     total_time = 0
     avg_time = 0
-    time_start = datetime.now()
+    time_start = time.process_time()
     for idx in range(start, end):
         result = result + idx
-    time_end = datetime.now()
-    total_time = time_end - time_start
-    avg_time = float(total_time.microseconds) / float(end-1)
-    return total_time.microseconds, avg_time
+    time_end = time.process_time()
+    total_time = (time_end - time_start)                                # total time in fractional seconds
+    avg_time = (float(total_time) / float(end-1)) * math.pow(10, 6)     # average time in microseconds
+    return total_time, avg_time
 
 def compute_multiplication_time():
     result = 0
     total_time = 0
     avg_time = 0
-    time_start = datetime.now()
+    time_start = time.process_time()
     for idx in range(start, end):
         result = (end-idx) * (idx)
-    time_end = datetime.now()   
-    total_time = time_end - time_start
-    avg_time = float(total_time.microseconds) / float(end-1)
-    return total_time.microseconds, avg_time
+    time_end = time.process_time()
+    total_time = (time_end - time_start)                                # total time in fractional seconds
+    avg_time = (float(total_time) / float(end-1)) * math.pow(10, 6)     # average time in microseconds
+    return total_time, avg_time
 
 def compute_division_time():
     result = 0
     total_time = 0
     avg_time = 0
-    time_start = datetime.now()
+    time_start = time.process_time()
     for idx in range(start, end):
         result = float(end-idx)/float(idx)
-    time_end = datetime.now()   
-    total_time = time_end - time_start
-    avg_time = float(total_time.microseconds) / float(end-1)
-    return total_time.microseconds, avg_time
+    time_end = time.process_time()
+    total_time = time_end - time_start                                  # total time in fractional seconds
+    avg_time = (float(total_time) / float(end-1)) * math.pow(10, 6)
+    return total_time, avg_time                                         # average time in microseconds
 
 if __name__ == "__main__":
     results = list()
@@ -58,5 +58,5 @@ if __name__ == "__main__":
 
     results.extend([addition, multiplication, division])
 
-    print(tabulate([addition, multiplication, division], headers=["Operation", "Total Time(MS)", "Average Time(MS)"], tablefmt="grid"))
+    print(tabulate([addition, multiplication, division], headers=["Operation", "Total Time(Sec)", "Average Time(mS)"], tablefmt="grid"))
 

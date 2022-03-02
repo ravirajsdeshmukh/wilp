@@ -126,6 +126,7 @@ if __name__ == "__main__":
         for row_idx in range(0, dim):
             for col_idx in range(0, dim):
                 A[row_idx][col_idx] = random.randint(1, 8)
+            b[row_idx] = random.randint(-2, 2)
 
         original_matrix = str_matrix(A)
         result.append(original_matrix)
